@@ -3,7 +3,7 @@ package data
 import "fmt"
 
 // ErrProductNotFound is an error raised when the product not found in the database
-var ErrProductNotFoud = fmt.Errorf("Product not found")
+var ErrProductNotFound = fmt.Errorf("Product not found")
 
 // Product defines the structure for an API product
 // swagger:model
@@ -104,7 +104,7 @@ func GetProducts() Products {
 func GetProductByID(id int) (*Product, error) {
 	i := findIndexByProductID(id)
 	if i == -1 {
-		return nil, ErrProductNotFoud
+		return nil, ErrProductNotFound
 	}
 	return productList[i], nil
 }
@@ -123,17 +123,17 @@ func AddProduct(p Product) {
 func UpdateProduct(p Product) error {
 	i := findIndexByProductID(p.ID)
 	if i == -1 {
-		return ErrProductNotFoud
+		return ErrProductNotFound
 	}
 	productList[i] = &p
 	return nil
 }
 
 // DeleteProduct deletes a product from the database
-func DeleteProduct(p Product) error {
-	i := findIndexByProductID(p.ID)
+func DeleteProduct(id int) error {
+	i := findIndexByProductID(id)
 	if i == -1 {
-		return ErrProductNotFoud
+		return ErrProductNotFound
 	}
 	productList = append(productList[:i], productList[i+1])
 	return nil
