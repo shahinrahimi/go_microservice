@@ -48,10 +48,7 @@ func NewValidation() *Validation {
 func validateSKU(fl validator.FieldLevel) bool {
 	re := regexp.MustCompile(`[a-z]+-[a-z]+-[a-z]+`)
 	sku := re.FindAllString(fl.Field().String(), -1)
-	if len(sku) == 1 {
-		return true
-	}
-	return false
+	return len(sku) == 1
 }
 
 func (v *Validation) Validate(i interface{}) ValidationErrors {
@@ -61,9 +58,9 @@ func (v *Validation) Validate(i interface{}) ValidationErrors {
 	}
 	var returnErrs []ValidationError
 	for _, err := range errs {
-		ve := ValidationError{err.(validator.FieldError)}
+		// ve := ValidationError{err.(validator.FieldError)}
+		ve := ValidationError{err}
 		returnErrs = append(returnErrs, ve)
 	}
-
 	return returnErrs
 }
