@@ -12,8 +12,14 @@ const CoffeeList = () => {
     const [products, setProducts] = React.useState<Product[]>([])
     React.useEffect(() => {
         const fetchProducts = async () => {
-            //axios.get(window.globalThis.api)
+            const res = await axios.get("http://localhost:7000/products")
+            if (res.status == 200) {
+                setProducts(res.data)
+            } else {
+                console.log(res)
+            }
         }
+        fetchProducts()
     }, [])
     return (
         <div>
