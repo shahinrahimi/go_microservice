@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package currency;
+
+
+option go_package = "./gocurrency";
+
+service Currency {
+    rpc GetRate(RateRequest) returns (RateResponse);
+}
+
+message RateRequest {
+    string Base = 1;
+    string Destination = 2;
+}
+
+message RateResponse {
+    float Rate = 1;
+}
+
