@@ -23,6 +23,13 @@ func main() {
 
 	if err := godotenv.Load(); err != nil {
 		l.Fatal(err)
+		os.Exit(1)
+	}
+
+	listenAddr := os.Getenv("LISTEN_ADDR")
+	if listenAddr == "" {
+		l.Fatal("the environmental variable not set correctly")
+		os.Exit(1)
 	}
 
 	// create handlers
@@ -57,7 +64,7 @@ func main() {
 	ch := gorrillaHandlers.CORS(gorrillaHandlers.AllowedOrigins([]string{"http://localhost:5173"}))
 
 	s := http.Server{
-		Addr:         ":7000",
+		Addr:         listenAddr,
 		Handler:      ch(sm),
 		ErrorLog:     l,
 		ReadTimeout:  5 * time.Second,
